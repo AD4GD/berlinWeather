@@ -44,7 +44,7 @@ WHERE {
 #   BIND("2023-08-07"^^xsd:string as ?inputDate)
 #   BIND("52.52"^^xsd:number as ?inputLat)
 #		BIND("13.4"^^xsd:number as ?inputLong)
-#   BIND("75"^^xsd:integer as ?total)
+    BIND("425"^^xsd:integer as ?total)
     BIND ("OGC SensorThings API - Observations" as ?info)	  
 	SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
 	  	## inputs
@@ -56,28 +56,140 @@ WHERE {
 	  	?results sdmw:temperature ?temperature . 
 	    ?results sdmw:precipitation ?precipitation .
 	    ?results sdmw:atmosphericPressure ?atmosphericPressure .
+	    ?results sdmw:cloudCoverage ?cloudCoverage .
+	    ?results sdmw:weatherType ?weatherType .
+	    ?results sdmw:dewPoint ?dewPoint .
+	    ?results sdmw:precipitationProbability ?precipitationProbability .
+	    ?results bsapi:precipitationProbability6h ?precipitationProbability6h .
+	    ?results sdmw:relativeHumidity ?relativeHumidity .
+	    ?results sdmw:directIrradiation ?directIrradiation .
+	    ?results bsapi:sunshine ?sunshine .
+	    ?results sdmw:visibility ?visibility .
+	    ?results sdmw:windDirection ?windDirection .
+	    ?results sdmw:windSpeed ?windSpeed .
+	    ?results bsapi:gustDirection ?gustDirection .
+	    ?results sdmw:gustSpeed ?gustSpeed .
+	    ?results bsapi:icon ?icon .
+	    ?results bsapi:fallbackSourceIds ?fallbackSourceIds .
+	    ?results sdm:source ?source .
 	}
-    {
+  {
 		#SELECT (MD5(CONCAT(STR(?resultTime),"-temperature")) AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)
 		SELECT (CONCAT(MD5(STR(?resultTime)),"-temperature") AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)
 		WHERE {
   			BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?var)        
 		}
-  	}
-  	UNION
-  	{
-		#SELECT (MD5(CONCAT(STR(?resultTime),"-precipitation")) AS ?id)  (?precipitation as ?simpleResult) (?var as ?observedProperty)
+  }
+  UNION
+  {
 		SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitation") AS ?id) (?precipitation as ?simpleResult) (?var as ?observedProperty)
 		WHERE {
   			BIND("https://vocab.nerc.ac.uk/standard_name/precipitation_amount/" as ?var)       
 		}
-  	}
-  	UNION
-  	{
-    	#SELECT (MD5(CONCAT(STR(?resultTime),"-atmosphericPressure")) AS ?id)  (?atmosphericPressure as ?simpleResult) (?var as ?observedProperty)
+  }
+  UNION
+  {
     	SELECT (CONCAT(MD5(STR(?resultTime)),"-atmosphericPressure") AS ?id) (?atmosphericPressure as ?simpleResult) (?var as ?observedProperty)
 		WHERE {
   			BIND("https://vocab.nerc.ac.uk/standard_name/air_pressure/" as ?var)      
 		}
-  	}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-atmosphericPressure") AS ?id) (?atmosphericPressure as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/air_pressure/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-cloudCoverage") AS ?id) (?cloudCoverage as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/cloud_area_fraction/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-weatherType") AS ?id) (?weatherType as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://w3id.org/ad4gd/berlin/weather/property/weatherType/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-dewPoint") AS ?id) (?dewPoint as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/dew_point_temperature/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitationProbability") AS ?id) (?precipitationProbability as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://w3id.org/ad4gd/berlin/weather/property/precipitationProbability/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitationProbability6h") AS ?id) (?precipitationProbability6h as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://w3id.org/ad4gd/berlin/weather/property/precipitationProbability6h/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-relativeHumidity") AS ?id) (?relativeHumidity as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/relative_humidity/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-directIrradiation") AS ?id) (?directIrradiation as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/solar_irradiance/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-sunshine") AS ?id) (?sunshine as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/duration_of_sunshine/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-visibility") AS ?id) (?visibility as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/visibility_in_air/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-windDirection") AS ?id) (?windDirection as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/wind_to_direction/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-windSpeed") AS ?id) (?windSpeed as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/wind_speed_shear/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-gustDirection") AS ?id) (?gustDirection as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/wind_gust_from_direction/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-gustSpeed") AS ?id) (?gustSpeed as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/wind_speed_of_gust/" as ?var)      
+		}
+  }
 }

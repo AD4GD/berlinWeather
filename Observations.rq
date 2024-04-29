@@ -17,7 +17,7 @@
 #+     "@iot.selfLink": "?id_link",
 #+     "phenomenonTime": "?resultTime",
 #+     "resultTime": "?resultTime",
-#+     "result": "?temperature",
+#+     "result": "?simpleResult",
 #+     "Datastream@iot.navigationLink": "?datastream_link",
 #+     "FeatureOfInterest@iot.navigationLink": "?feature_link",
 #+   }

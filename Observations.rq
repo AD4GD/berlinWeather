@@ -1,6 +1,6 @@
 #+ summary: "Retrieves all the information about ILIAD Observations"
 #+ description: "NOTE: make sure response content type is application/json"
-#+ endpoint: "https://www.foodie-cloud.org/sparql?default-graph-uri=http://w3id.org/iliad/dataaset/jf-pilot-sample"
+#+ endpoint: "http://metaphactory.foodie-cloud.org/sparql?repository=ephedra"
 #+ tags:
 #+   - json
 #+ method: GET
@@ -15,56 +15,36 @@
 #+   "value": {
 #+     "@iot.id": "?id",
 #+     "@iot.selfLink": "?id_link",
-#+     "phenomenonTime": "?phenomenonTime",
+#+     "phenomenonTime": "?resultTime",
 #+     "resultTime": "?resultTime",
-#+     "result": {
-#+        "densityOfJF": "?densityOfJF",
-#+        "quantityOfJF": "?quantityOfJF",
-#+        "sampleSizeValue": "?sampleSizeValue",
-#+        "speciesScientificName": "?scientificName",
-#+        "wormsConcept": "?wormsConcept",
-#+        "stingByJF": "?stingByJF",
-#+        "beachedJF": "?beachedJF",
-#+     },
+#+     "result": "?temperature",
 #+     "Datastream@iot.navigationLink": "?datastream_link",
 #+     "FeatureOfInterest@iot.navigationLink": "?feature_link",
 #+   }
 #+ }
 
-PREFIX iliad-api: <https://w3id.org/iliad/jf/api/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX sosa:  <http://www.w3.org/ns/sosa/>
-PREFIX oim-jf:  <http://w3id.org/iliad/oim/jellyfish#> 
-PREFIX dwc: <http://rs.tdwg.org/dwc/terms/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX dwc-mbg: <http://mmisw.org/ont/ioos/marine_biogeography/>
-
-SELECT DISTINCT ?info ?id ?id_link ?resultTime ?phenomenonTime ?densityOfJF ?quantityOfJF ?sampleSizeValue ?scientificName ?wormsConcept ?stingByJF ?beachedJF ?datastream_link ?feature_link ?total ?next_link
+SELECT (MD5(STR(?resultTime)) AS ?id) ?resultTime ?temperature ?cfTemp 
 WHERE {
-    ?col a sosa:ObservationCollection ;
-      sosa:resultTime ?resultTime ;
-			sosa:phenomenonTime ?phenomenonTime ; 
-      sosa:hasMember ?s .
-    ?s a sosa:Observation ;
-			sosa:hasResult ?result .
-    OPTIONAL {
-      ?result oim-jf:densityOfJF ?densityOfJF ;
-        dwc:individualCount ?quantityOfJF ; 
-			  dwc:sampleSizeValue ?sampleSizeValue ;
-			  dwc:scientificName ?scientificName ;
-			  dwc-mbg:aphiaID ?wormsConcept ;
-        oim-jf:stingByJF ?stingByJF ;
-	      oim-jf:beachedJF ?beachedJF .
-    }
+   	BIND("2023-08-07"^^xsd:string as ?inputDate)
+   	BIND("52.52"^^xsd:number as ?inputLat)
+	  BIND("13.4"^^xsd:number as ?inputLong)
+  	BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?cfTemp)
+	  SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
+	  ## inputs
+    	?results dct:date ?inputDate .
+	    ?results geo84:lat ?inputLat .
+    	?results geo84:long ?inputLong .    
+	  ## outputs    
+    	?results sosa:resultTime ?resultTime .
+	    ?results sdmw:temperature ?temperature .           
+	  }
+	  
+	  
 		BIND ("OGC SensorThings API - Observations" as ?info)	  
     BIND (REPLACE(STR(?s), "^.*/([^/]*)$", "$1") as ?id)
-    BIND (URI(CONCAT('https://w3id.org/iliad/jf/api/v1.0/Observations(', ?id,')')) AS ?id_link)
-    BIND (URI(CONCAT('https://w3id.org/iliad/jf/api/v1.0/Observations(', ?id,')/Datastream')) AS ?datastream_link)
-    BIND (URI(CONCAT('https://w3id.org/iliad/jf/api/v1.0/Observations(', ?id,')/FeatureOfInterest')) AS ?feature_link)
-    {
-       SELECT (count(*) as ?total) WHERE { ?x a sosa:Observation }
-
-    }
-    BIND (URI(CONCAT('https://w3id.org/iliad/jf/api/v1.0/Observations?$top=',xsd:integer(?_limit),'&$skip=', xsd:integer(COALESCE(?_offset, 0))+xsd:integer(?_limit))) AS ?next_link)
+    BIND (URI(CONCAT('https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(', ?id,')')) AS ?id_link)
+    BIND (URI(CONCAT('https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(', ?id,')/Datastream')) AS ?datastream_link)
+    BIND (URI(CONCAT('https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(', ?id,')/FeatureOfInterest')) AS ?feature_link)
+    BIND("25"^^xsd:integer as ?total)
+    BIND (URI(CONCAT('https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations?$top=',xsd:integer(?_limit),'&$skip=', xsd:integer(COALESCE(?_offset, 0))+xsd:integer(?_limit))) AS ?next_link)
 }
-ORDER BY ?id

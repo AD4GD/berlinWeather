@@ -34,26 +34,47 @@ PREFIX sdm: <https://smartdatamodels.org/>
 PREFIX bsapi: <https://w3id.org/ad4gd/ext/brightsky/>
 PREFIX sdmw: <https://smartdatamodels.org/dataModel.Weather/>
 
-SELECT ?info ?total (MD5(STR(?resultTime)) AS ?id)
-        (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")")) AS ?id_link) 
-        (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/Datastream")) AS ?datastream_link)
-        (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/FeatureOfInterest")) AS ?feature_link)
-        (URI(CONCAT('https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations?$top=',xsd:integer(?_limit),'&$skip=', xsd:integer(COALESCE(?_offset, 0))+xsd:integer(?_limit))) AS ?next_link)
-        ?resultTime ?temperature ?cfTemp 
+SELECT ?info ?total ?id
+(URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")")) AS ?id_link) 
+(URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/Datastream")) AS ?datastream_link)
+(URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/FeatureOfInterest")) AS ?feature_link)
+(URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations?$top=",xsd:integer(?_limit),"&$skip=", xsd:integer(COALESCE(?_offset, 0))+xsd:integer(?_limit))) AS ?next_link)
+?resultTime ?simpleResult ?observedProperty 
+WHERE {
+   	BIND("2023-08-07"^^xsd:string as ?inputDate)
+   	BIND("52.52"^^xsd:number as ?inputLat)
+	BIND("13.4"^^xsd:number as ?inputLong)
+    BIND("75"^^xsd:integer as ?total)
+    BIND ("OGC SensorThings API - Observations" as ?info)	  
+	SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
+	  	## inputs
+    	?results dct:date ?inputDate .
+		?results geo84:lat ?inputLat .
+	  	?results geo84:long ?inputLong .    
+		## outputs    
+	    ?results sosa:resultTime ?resultTime .
+	  	?results sdmw:temperature ?temperature . 
+	    ?results sdmw:precipitation ?precipitation .
+	    ?results sdmw:atmosphericPressure ?atmosphericPressure .
+	}
+    {
+		SELECT (MD5(CONCAT(STR(?resultTime),"-temperature")) AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)
 		WHERE {
-   		BIND("2023-08-07"^^xsd:string as ?inputDate)
-   		BIND("52.52"^^xsd:number as ?inputLat)
-	  	BIND("13.4"^^xsd:number as ?inputLong)
-  		BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?cfTemp)
-        BIND("25"^^xsd:integer as ?total)
-        BIND ("OGC SensorThings API - Observations" as ?info)	  
-	  	SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
-	  ## inputs
-    		?results dct:date ?inputDate .
-		    ?results geo84:lat ?inputLat .
-  	  	?results geo84:long ?inputLong .    
-	  ## outputs    
-    		?results sosa:resultTime ?resultTime .
-	    	?results sdmw:temperature ?temperature .           
-	  	}	  	 		
-	  }
+  			BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?var)        
+		}
+  	}
+  	UNION
+  	{
+		SELECT (MD5(CONCAT(STR(?resultTime),"-precipitation")) AS ?id)  (?precipitation as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/precipitation_amount/" as ?var)       
+		}
+  	}
+  	UNION
+  	{
+    	SELECT (MD5(CONCAT(STR(?resultTime),"-atmosphericPressure")) AS ?id)  (?atmosphericPressure as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/air_pressure/" as ?var)      
+		}
+  	}
+}

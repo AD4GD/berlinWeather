@@ -62,6 +62,7 @@ WHERE {
 	    ?results sdmw:precipitationProbability ?precipitationProbability .
 	    ?results bsapi:precipitationProbability6h ?precipitationProbability6h .
 	    ?results sdmw:relativeHumidity ?relativeHumidity .
+	    ?results sdmw:directIrradiation ?directIrradiation .
 	}
   {
 		#SELECT (MD5(CONCAT(STR(?resultTime),"-temperature")) AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)

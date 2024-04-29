@@ -34,21 +34,19 @@ PREFIX sdm: <https://smartdatamodels.org/>
 PREFIX bsapi: <https://w3id.org/ad4gd/ext/brightsky/>
 PREFIX sdmw: <https://smartdatamodels.org/dataModel.Weather/>
 
-SELECT ?info ?id ?id_link ?resultTime ?temperature ?cfTemp ?datastream_link ?feature_link ?total ?next_link
-WHERE {
-		BIND ("OGC SensorThings API - Observations" as ?info)	  
-    BIND (URI(CONCAT('https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(', ?id,')')) AS ?id_link)
-    BIND (URI(CONCAT('https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(', ?id,')/Datastream')) AS ?datastream_link)
-    BIND (URI(CONCAT('https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(', ?id,')/FeatureOfInterest')) AS ?feature_link)
-    BIND("25"^^xsd:integer as ?total)
-    BIND (URI(CONCAT('https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations?$top=',xsd:integer(?_limit),'&$skip=', xsd:integer(COALESCE(?_offset, 0))+xsd:integer(?_limit))) AS ?next_link)
-    {
-		SELECT (MD5(STR(?resultTime)) AS ?id) ?resultTime ?temperature ?cfTemp 
+SELECT ?info ?total (MD5(STR(?resultTime)) AS ?id)
+        (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")")) AS ?id_link) 
+        (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/Datastream")) AS ?datastream_link)
+        (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/FeatureOfInterest")) AS ?feature_link)
+        (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations?$top=",xsd:integer(?_limit),"&$skip=", xsd:integer(COALESCE(?_offset, 0))+xsd:integer(?_limit))) AS ?next_link)
+        ?resultTime ?temperature ?cfTemp 
 		WHERE {
    		BIND("2023-08-07"^^xsd:string as ?inputDate)
    		BIND("52.52"^^xsd:number as ?inputLat)
 	  	BIND("13.4"^^xsd:number as ?inputLong)
   		BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?cfTemp)
+        BIND("25"^^xsd:integer as ?total)
+        BIND ("OGC SensorThings API - Observations" as ?info)	  
 	  	SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
 	  ## inputs
     		?results dct:date ?inputDate .
@@ -59,5 +57,3 @@ WHERE {
 	    	?results sdmw:temperature ?temperature .           
 	  	}	  	 		
 	  }
-	 }
-}

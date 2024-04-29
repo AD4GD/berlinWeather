@@ -125,5 +125,25 @@ WHERE {
   			BIND("https://w3id.org/ad4gd/berlin/weather/property/precipitationProbability6h/" as ?var)      
 		}
   }  
-  
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-relativeHumidity") AS ?id) (?relativeHumidity as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/relative_humidity/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-directIrradiation") AS ?id) (?directIrradiation as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/solar_irradiance/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-sunshine") AS ?id) (?sunshine as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/duration_of_sunshine/" as ?var)      
+		}
+  }
 }

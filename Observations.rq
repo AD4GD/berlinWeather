@@ -56,22 +56,7 @@ WHERE {
 	  	?results sdmw:temperature ?temperature . 
 	    ?results sdmw:precipitation ?precipitation .
 	    ?results sdmw:atmosphericPressure ?atmosphericPressure .
-	    ?results sdmw:cloudCoverage ?cloudCoverage .
-	    ?results sdmw:weatherType ?weatherType .
-	    ?results sdmw:dewPoint ?dewPoint .
-	    ?results sdmw:precipitationProbability ?precipitationProbability .
-	    ?results bsapi:precipitationProbability6h ?precipitationProbability6h .
-	    ?results sdmw:relativeHumidity ?relativeHumidity .
-	    ?results sdmw:directIrradiation ?directIrradiation .
-	    ?results bsapi:sunshine ?sunshine .
-	    ?results sdmw:visibility ?visibility .
-	    ?results sdmw:windDirection ?windDirection .
-	    ?results sdmw:windSpeed ?windSpeed .
-	    ?results bsapi:gustDirection ?gustDirection .
-	    ?results sdmw:gustSpeed ?gustSpeed .
-	    ?results bsapi:icon ?icon .
-	    ?results bsapi:fallbackSourceIds ?fallbackSourceIds .
-	    ?results sdm:source ?source .
+	    
 	}
   {
 		#SELECT (MD5(CONCAT(STR(?resultTime),"-temperature")) AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)

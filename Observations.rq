@@ -58,21 +58,24 @@ WHERE {
 	    ?results sdmw:atmosphericPressure ?atmosphericPressure .
 	}
     {
-		SELECT (MD5(CONCAT(STR(?resultTime),"-temperature")) AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)
+		#SELECT (MD5(CONCAT(STR(?resultTime),"-temperature")) AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)
+		SELECT (CONCAT(MD5(STR(?resultTime)),"-temperature") AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)
 		WHERE {
   			BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?var)        
 		}
   	}
   	UNION
   	{
-		SELECT (MD5(CONCAT(STR(?resultTime),"-precipitation")) AS ?id)  (?precipitation as ?simpleResult) (?var as ?observedProperty)
+		#SELECT (MD5(CONCAT(STR(?resultTime),"-precipitation")) AS ?id)  (?precipitation as ?simpleResult) (?var as ?observedProperty)
+		SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitation") AS ?id) (?precipitation as ?simpleResult) (?var as ?observedProperty)
 		WHERE {
   			BIND("https://vocab.nerc.ac.uk/standard_name/precipitation_amount/" as ?var)       
 		}
   	}
   	UNION
   	{
-    	SELECT (MD5(CONCAT(STR(?resultTime),"-atmosphericPressure")) AS ?id)  (?atmosphericPressure as ?simpleResult) (?var as ?observedProperty)
+    	#SELECT (MD5(CONCAT(STR(?resultTime),"-atmosphericPressure")) AS ?id)  (?atmosphericPressure as ?simpleResult) (?var as ?observedProperty)
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-atmosphericPressure") AS ?id) (?atmosphericPressure as ?simpleResult) (?var as ?observedProperty)
 		WHERE {
   			BIND("https://vocab.nerc.ac.uk/standard_name/air_pressure/" as ?var)      
 		}

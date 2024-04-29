@@ -95,25 +95,5 @@ WHERE {
   			BIND("https://vocab.nerc.ac.uk/standard_name/air_pressure/" as ?var)      
 		}
   }  
-  UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-cloudCoverage") AS ?id) (?cloudCoverage as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/cloud_area_fraction/" as ?var)      
-		}
-  }
-  UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-weatherType") AS ?id) (?weatherType as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://w3id.org/ad4gd/berlin/weather/property/weatherType/" as ?var)      
-		}
-  }
-  UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-dewPoint") AS ?id) (?dewPoint as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/dew_point_temperature/" as ?var)      
-		}
-  }
+  
 }

@@ -68,6 +68,7 @@ WHERE {
 	    ?results sdmw:windDirection ?windDirection .
 	    ?results sdmw:windSpeed ?windSpeed .
 	    ?results bsapi:gustDirection ?gustDirection .
+	    ?results sdmw:gustSpeed ?gustSpeed .
 	}
   {
 		#SELECT (MD5(CONCAT(STR(?resultTime),"-temperature")) AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)

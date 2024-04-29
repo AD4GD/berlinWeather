@@ -60,6 +60,7 @@ WHERE {
 	    ?results sdmw:weatherType ?weatherType .
 	    ?results sdmw:dewPoint ?dewPoint .
 	    ?results sdmw:precipitationProbability ?precipitationProbability .
+	    ?results bsapi:precipitationProbability6h ?precipitationProbability6h .
 	    
 	}
   {

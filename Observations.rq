@@ -59,7 +59,7 @@ WHERE {
 	    ?results sdmw:cloudCoverage ?cloudCoverage .
 	    ?results sdmw:weatherType ?weatherType .
 	    ?results sdmw:dewPoint ?dewPoint .
-	    
+	    ?results sdmw:precipitationProbability ?precipitationProbability .
 	    
 	}
   {

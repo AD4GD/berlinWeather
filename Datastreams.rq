@@ -63,4 +63,30 @@ WHERE {
   {BIND(CONCAT(STR(?source),"-precipitation") AS ?id).BIND("mm" as ?unit_symbol).BIND("Millimeter" as ?unit_name)}
   UNION
   {BIND(CONCAT(STR(?source),"-atmosphericPressure") AS ?id).BIND("hPa" as ?unit_symbol).BIND("Hectopascal" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-cloudCoverage") AS ?id).BIND("%" as ?unit_symbol).BIND("Percent" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-weatherType") AS ?id).BIND("-" as ?unit_symbol).BIND("Unitless" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-dewPoint") AS ?id).BIND("°C" as ?unit_symbol).BIND("degree Celsius" as ?unit_name)}
+  UNION
+  {BIND(CONCAT(STR(?source),"-precipitationProbability") AS ?id).BIND("%" as ?unit_symbol).BIND("Percent" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-precipitationProbability6h") AS ?id).BIND("%" as ?unit_symbol).BIND("Percent" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-relativeHumidity") AS ?id).BIND("%" as ?unit_symbol).BIND("Percent" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-directIrradiation") AS ?id).BIND("kWh/m²" as ?unit_symbol).BIND("Kilowatthour per square meter" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-sunshine") AS ?id).BIND("min" as ?unit_symbol).BIND("Minute" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-visibility") AS ?id).BIND("m" as ?unit_symbol).BIND("Meter" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-windDirection") AS ?id).BIND("°" as ?unit_symbol).BIND("Degree" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-windSpeed") AS ?id).BIND("km/h" as ?unit_symbol).BIND("Kilometre per Hour" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-gustDirection") AS ?id).BIND("°" as ?unit_symbol).BIND("Degree" as ?unit_name)}  
+  UNION
+  {BIND(CONCAT(STR(?source),"-gustSpeed") AS ?id).BIND("km/h" as ?unit_symbol).BIND("Kilometre per Hour" as ?unit_name)}  
 }

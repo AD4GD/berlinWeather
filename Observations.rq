@@ -40,27 +40,27 @@ WHERE {
     BIND ("OGC SensorThings API - Observations" as ?info)	  
 	SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
 	  	## inputs
-    	?results dct:date ?_inputDate .
-		?results geo84:lat ?_inputLat .
-	  	?results geo84:long ?_inputLong .    
+    	?results dct:date ?_inputDate ;
+			geo84:lat ?_inputLat ;
+	  	geo84:long ?_inputLong ;
 		## outputs    
-	    ?results sosa:resultTime ?resultTime .
-	  	?results sdmw:temperature ?temperature . 
-	    ?results sdmw:precipitation ?precipitation .
-	    ?results sdmw:atmosphericPressure ?atmosphericPressure .
-	    ?results sdmw:cloudCoverage ?cloudCoverage .
-	    ?results sdmw:weatherType ?weatherType .
-	    ?results sdmw:dewPoint ?dewPoint .
-	    ?results sdmw:precipitationProbability ?precipitationProbability .
-	    ?results bsapi:precipitationProbability6h ?precipitationProbability6h .
-	    ?results sdmw:relativeHumidity ?relativeHumidity .
-	    ?results sdmw:directIrradiation ?directIrradiation .
-	    ?results bsapi:sunshine ?sunshine .
-	    ?results sdmw:visibility ?visibility .
-	    ?results sdmw:windDirection ?windDirection .
-	    ?results sdmw:windSpeed ?windSpeed .
-	    ?results bsapi:gustDirection ?gustDirection .
-	    ?results sdmw:gustSpeed ?gustSpeed .	    
+	    sosa:resultTime ?resultTime ;
+	  	sdmw:temperature ?temperature ;
+	    sdmw:precipitation ?precipitation ;
+	    sdmw:atmosphericPressure ?atmosphericPressure ;
+	    sdmw:cloudCoverage ?cloudCoverage ;
+	    sdmw:weatherType ?weatherType ;
+	    sdmw:dewPoint ?dewPoint ;
+	    sdmw:precipitationProbability ?precipitationProbability ;
+	    bsapi:precipitationProbability6h ?precipitationProbability6h ;
+	    sdmw:relativeHumidity ?relativeHumidity ;
+	    sdmw:directIrradiation ?directIrradiation ;
+	    bsapi:sunshine ?sunshine ;
+	    sdmw:visibility ?visibility ;
+	    sdmw:windDirection ?windDirection ;
+	    sdmw:windSpeed ?windSpeed ;
+	    bsapi:gustDirection ?gustDirection ;
+	    sdmw:gustSpeed ?gustSpeed .
 	}	
   {	BIND(CONCAT(MD5(STR(?resultTime)),"-temperature") AS ?id) . BIND(?temperature as ?simpleResult) . BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?observedProperty)	}
   UNION

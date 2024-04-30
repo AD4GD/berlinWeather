@@ -127,5 +127,12 @@ WHERE {
 		WHERE {
   			BIND("https://vocab.nerc.ac.uk/standard_name/relative_humidity/" as ?var)      
 		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-directIrradiation") AS ?id) (?directIrradiation as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/solar_irradiance/" as ?var)      
+		}
   }  
 }

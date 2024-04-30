@@ -6,7 +6,6 @@
 #+ limit: 100
 #+ offset: 0
 #+ defaults:
-#+   - inputDate: 2023-08-07
 #+   - inputLat: 52.52
 #+   - inputLong: 13.4
 #+ endpoint_in_url: False

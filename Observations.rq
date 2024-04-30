@@ -1,28 +1,28 @@
-#+ summary: "Retrieves all the information about ILIAD Observations"
-#+ endpoint: "http://metaphactory.foodie-cloud.org/sparql?repository=ephedra"
+#+ summary:"Retrieves all the information about ILIAD Observations"
+#+ endpoint:"http://metaphactory.foodie-cloud.org/sparql?repository=ephedra"
 #+ tags:
 #+   - json
-#+ method: POST
-#+ limit: 100
-#+ offset: 0
+#+ method:POST
+#+ limit:100
+#+ offset:0
 #+ defaults:
-#+   - inputDate: 2023-08-07
-#+   - inputLat: 52.52
-#+   - inputLong: 13.4
-#+ endpoint_in_url: False
+#+   - inputDate:2023-08-07
+#+   - inputLat:52.52
+#+   - inputLong:13.4
+#+ endpoint_in_url:False
 #+ transform: {
-#+   "description": "?info",
-#+   "$anchor": "description",
-#+   "@iot.count": "?total",
-#+   "@iot.nextLink": "?next_link",
-#+   "value": {
-#+     "@iot.id": "?id",
-#+     "@iot.selfLink": "?id_link",
-#+     "phenomenonTime": "?resultTime",
-#+     "resultTime": "?resultTime",
-#+     "result": "?simpleResult",
-#+     "Datastream@iot.navigationLink": "?datastream_link",
-#+     "FeatureOfInterest@iot.navigationLink": "?feature_link",
+#+   "description":"?info",
+#+   "$anchor":"description",
+#+   "@iot.count":"?total",
+#+   "@iot.nextLink":"?next_link",
+#+   "value":{
+#+     "@iot.id":"?id",
+#+     "@iot.selfLink":"?id_link",
+#+     "phenomenonTime":"?resultTime",
+#+     "resultTime":"?resultTime",
+#+     "result":"?simpleResult",
+#+     "Datastream@iot.navigationLink":"?datastream_link",
+#+     "FeatureOfInterest@iot.navigationLink":"?feature_link"
 #+   }
 #+ }
 
@@ -44,7 +44,7 @@ WHERE {
     BIND ("OGC SensorThings API - Observations" as ?info)	  
 	SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
 	  	## inputs
-    	?results dct:date ?_inputDate_string ;
+    	?results dct:date ?_inputDate ;
 			geo84:lat ?_inputLat ;
 	  	geo84:long ?_inputLong ;
 		## outputs    

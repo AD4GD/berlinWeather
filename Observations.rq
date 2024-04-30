@@ -46,7 +46,7 @@ WHERE {
 	  	## inputs
     	?results dct:date ?_inputDate ;
 			geo84:lat ?_inputLat_number ;
-	  	geo84:long ?_inputLong ;
+	  	geo84:long ?_inputLong_number ;
 		## outputs    
 	    sosa:resultTime ?resultTime ;
 	  	sdmw:temperature ?temperature ;

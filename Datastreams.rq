@@ -36,6 +36,7 @@ PREFIX xsd:<http://www.w3.org/2001/XMLSchema#>
 PREFIX sosa:<http://www.w3.org/ns/sosa/>
 PREFIX geo84:<http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX bsapi:<https://w3id.org/ad4gd/ext/brightsky/>
+PREFIX sdm:<https://smartdatamodels.org/>
 PREFIX sdmw:<https://smartdatamodels.org/dataModel.Weather/>
 SELECT ?info ?total ?obs_type ?unit_definition ?id ?unit_symbol ?unit_name
 (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Datastreams(",?id,")")) AS ?id_link) 
@@ -55,13 +56,11 @@ WHERE {
 		geo84:lat ?_inputLat_number;
 		geo84:long ?_inputLong_number;
 		## outputs
-		?results sdm:source ?source .
-		
+		sdm:source ?source .		
 	}	
   {BIND(CONCAT(STR(?source),"-temperature") AS ?id).BIND("°C" as ?unit_symbol).BIND("degree Celsius" as ?unit_name)}
   UNION
   {BIND(CONCAT(STR(?source),"-precipitation") AS ?id).BIND("mm" as ?unit_symbol).BIND("Millimeter" as ?unit_name)}
   UNION
-  {BIND(CONCAT(STR(?source),"-atmosphericPressure") AS ?id).BIND("hPa" as ?unit_symbol).BIND("Hectopascal" as ?unit_name)}
-  
+  {BIND(CONCAT(STR(?source),"-atmosphericPressure") AS ?id).BIND("hPa" as ?unit_symbol).BIND("Hectopascal" as ?unit_name)}  
 }

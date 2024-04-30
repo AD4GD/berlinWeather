@@ -45,7 +45,7 @@ WHERE {
 	SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
 	  	## inputs
     	?results dct:date ?_inputDate ;
-			geo84:lat ?_inputLat ;
+			geo84:lat ?_inputLat_number ;
 	  	geo84:long ?_inputLong ;
 		## outputs    
 	    sosa:resultTime ?resultTime ;

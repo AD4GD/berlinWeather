@@ -90,7 +90,5 @@ WHERE {
   UNION
   { BIND(CONCAT(MD5(STR(?resultTime)),"-windSpeed") AS ?id) . BIND(?windSpeed as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/wind_speed_shear/" as ?observedProperty) }	
   UNION
-  { BIND(CONCAT(MD5(STR(?resultTime)),"-gustDirection") AS ?id) . BIND(?gustDirection as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/wind_gust_from_direction/" as ?observedProperty) }	
-  UNION
-  { BIND(CONCAT(MD5(STR(?resultTime)),"-gustSpeed") AS ?id) . BIND(?gustSpeed as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/wind_speed_of_gust/" as ?observedProperty) }	
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-gustDirection") AS ?id) . BIND(?gustDirection as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/wind_gust_from_direction/" as ?observedProperty) }  
 }

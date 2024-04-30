@@ -138,4 +138,11 @@ WHERE {
   			BIND("https://vocab.nerc.ac.uk/standard_name/duration_of_sunshine/" as ?var)      
 		}
   }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-visibility") AS ?id) (?visibility as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/visibility_in_air/" as ?var)      
+		}
+  }
 }

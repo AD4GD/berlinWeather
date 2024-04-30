@@ -44,7 +44,7 @@ WHERE {
     BIND ("OGC SensorThings API - Observations" as ?info)	  
 	SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
 	  	## inputs
-    	?results dct:date ?_inputDate ;
+    	?results dct:date ?_inputDate_string ;
 			geo84:lat ?_inputLat ;
 	  	geo84:long ?_inputLong ;
 		## outputs    

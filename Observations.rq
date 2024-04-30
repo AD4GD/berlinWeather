@@ -4,6 +4,8 @@
 #+ tags:
 #+   - json
 #+ method: GET
+#+ limit: 100
+#+ offset: 0
 #+ endpoint_in_url: False
 #+ transform: {
 #+   "description": "?info",
@@ -125,19 +127,5 @@ WHERE {
 		WHERE {
   			BIND("https://vocab.nerc.ac.uk/standard_name/relative_humidity/" as ?var)      
 		}
-  }
-  UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-directIrradiation") AS ?id) (?directIrradiation as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/solar_irradiance/" as ?var)      
-		}
-  }
-  UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-sunshine") AS ?id) (?sunshine as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/duration_of_sunshine/" as ?var)      
-		}
-  }
+  }  
 }

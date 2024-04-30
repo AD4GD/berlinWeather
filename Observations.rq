@@ -12,6 +12,7 @@
 #+   "description": "?info",
 #+   "$anchor": "description",
 #+   "@iot.count": "?total",
+#+   "@iot.nextLink": "?next_link",
 #+   "value": {
 #+     "@iot.id": "?id",
 #+     "@iot.selfLink": "?id_link",
@@ -32,6 +33,7 @@ SELECT ?info ?total ?id
 (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")")) AS ?id_link) 
 (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/Datastream")) AS ?datastream_link)
 (URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/FeatureOfInterest")) AS ?feature_link)
+(URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations?$top=",xsd:integer(?_limit),"&$skip=", xsd:integer(COALESCE(?_offset, 0))+xsd:integer(?_limit))) AS ?next_link)
 ?resultTime ?simpleResult ?observedProperty 
 WHERE {
 	BIND("400"^^xsd:integer as ?total)

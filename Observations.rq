@@ -61,88 +61,28 @@ WHERE {
 	    ?results sdmw:windSpeed ?windSpeed .
 	    ?results bsapi:gustDirection ?gustDirection .
 	    ?results sdmw:gustSpeed ?gustSpeed .	    
-	}
-  {		
-		SELECT (CONCAT(MD5(STR(?resultTime)),"-temperature") AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?var)        
-		}
-  }
+	}	
+  {	BIND(CONCAT(MD5(STR(?resultTime)),"-temperature") AS ?id) . BIND(?temperature as ?simpleResult) . BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?observedProperty)	}
   UNION
-  {
-		SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitation") AS ?id) (?precipitation as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/precipitation_amount/" as ?var)       
-		}
-  }
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-precipitation") AS ?id) . BIND(?precipitation as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/precipitation_amount/" as ?observedProperty)	}
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-atmosphericPressure") AS ?id) (?atmosphericPressure as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/air_pressure/" as ?var)      
-		}
-  }
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-atmosphericPressure") AS ?id) . BIND(?atmosphericPressure as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/air_pressure/" as ?observedProperty) }
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-cloudCoverage") AS ?id) (?cloudCoverage as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/cloud_area_fraction/" as ?var)      
-		}
-  }
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-cloudCoverage") AS ?id) . BIND(?cloudCoverage as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/cloud_area_fraction/" as ?observedProperty) }
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-weatherType") AS ?id) (?weatherType as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://w3id.org/ad4gd/berlin/weather/property/weatherType/" as ?var)      
-		}
-  }
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-weatherType") AS ?id) . BIND(?weatherType as ?simpleResult) . BIND("https://w3id.org/ad4gd/berlin/weather/property/weatherType/" as ?observedProperty) }
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-dewPoint") AS ?id) (?dewPoint as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/dew_point_temperature/" as ?var)      
-		}
-  }
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-dewPoint") AS ?id) . BIND(?dewPoint as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/dew_point_temperature/" as ?observedProperty) }	
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitationProbability") AS ?id) (?precipitationProbability as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://w3id.org/ad4gd/berlin/weather/property/precipitationProbability/" as ?var)      
-		}
-  }
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-precipitationProbability") AS ?id) . BIND(?precipitationProbability as ?simpleResult) . BIND("https://w3id.org/ad4gd/berlin/weather/property/precipitationProbability/" as ?observedProperty) }
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitationProbability6h") AS ?id) (?precipitationProbability6h as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://w3id.org/ad4gd/berlin/weather/property/precipitationProbability6h/" as ?var)      
-		}
-  }  
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-precipitationProbability6h") AS ?id) . BIND(?precipitationProbability6h as ?simpleResult) . BIND("https://w3id.org/ad4gd/berlin/weather/property/precipitationProbability6h/" as ?observedProperty) }		 
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-relativeHumidity") AS ?id) (?relativeHumidity as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/relative_humidity/" as ?var)      
-		}
-  }
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-relativeHumidity") AS ?id) . BIND(?relativeHumidity as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/relative_humidity/" as ?observedProperty) }	
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-directIrradiation") AS ?id) (?directIrradiation as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/solar_irradiance/" as ?var)      
-		}
-  }  
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-directIrradiation") AS ?id) . BIND(?directIrradiation as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/solar_irradiance/" as ?observedProperty) }	
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-sunshine") AS ?id) (?sunshine as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/duration_of_sunshine/" as ?var)      
-		}
-  }
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-sunshine") AS ?id) . BIND(?sunshine as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/duration_of_sunshine/" as ?observedProperty) }		
   UNION
-  {
-    	SELECT (CONCAT(MD5(STR(?resultTime)),"-visibility") AS ?id) (?visibility as ?simpleResult) (?var as ?observedProperty)
-		WHERE {
-  			BIND("https://vocab.nerc.ac.uk/standard_name/visibility_in_air/" as ?var)      
-		}
-  }
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-visibility") AS ?id) . BIND(?visibility as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/visibility_in_air/" as ?observedProperty) }	
 }

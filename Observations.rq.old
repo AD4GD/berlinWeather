@@ -1,0 +1,148 @@
+#+ summary: "Retrieves all the information about ILIAD Observations"
+#+ endpoint: "http://metaphactory.foodie-cloud.org/sparql?repository=ephedra"
+#+ tags:
+#+   - json
+#+ method: POST
+#+ limit: 100
+#+ offset: 0
+#+ endpoint_in_url: False
+#+ transform: {
+#+   "description": "?info",
+#+   "$anchor": "description",
+#+   "@iot.count": "?total",
+#+   "@iot.nextLink": "?next_link",
+#+   "value": {
+#+     "@iot.id": "?id",
+#+     "@iot.selfLink": "?id_link",
+#+     "phenomenonTime": "?resultTime",
+#+     "resultTime": "?resultTime",
+#+     "result": "?simpleResult",
+#+     "Datastream@iot.navigationLink": "?datastream_link",
+#+     "FeatureOfInterest@iot.navigationLink": "?feature_link",
+#+   }
+#+ }
+
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX geo84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX bsapi: <https://w3id.org/ad4gd/ext/brightsky/>
+PREFIX sdmw: <https://smartdatamodels.org/dataModel.Weather/>
+
+SELECT ?info ?total ?id
+(URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")")) AS ?id_link) 
+(URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/Datastream")) AS ?datastream_link)
+(URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations(",?id,")/FeatureOfInterest")) AS ?feature_link)
+(URI(CONCAT("https://w3id.org/ad4gd/berlin/weather/api/v1.0/Observations?$top=",xsd:integer(?_limit),"&$skip=", xsd:integer(COALESCE(?_offset, 0))+xsd:integer(?_limit))) AS ?next_link)
+?resultTime ?simpleResult ?observedProperty 
+WHERE {
+    BIND("400"^^xsd:integer as ?total)
+    BIND ("OGC SensorThings API - Observations" as ?info)	  
+	SERVICE <http://www.metaphacts.com/ontologies/platform/repository/federation#brightskyWeatherData> {
+	  	## inputs
+    	?results dct:date ?_inputDate .
+		?results geo84:lat ?_inputLat .
+	  	?results geo84:long ?_inputLong .    
+		## outputs    
+	    ?results sosa:resultTime ?resultTime .
+	  	?results sdmw:temperature ?temperature . 
+	    ?results sdmw:precipitation ?precipitation .
+	    ?results sdmw:atmosphericPressure ?atmosphericPressure .
+	    ?results sdmw:cloudCoverage ?cloudCoverage .
+	    ?results sdmw:weatherType ?weatherType .
+	    ?results sdmw:dewPoint ?dewPoint .
+	    ?results sdmw:precipitationProbability ?precipitationProbability .
+	    ?results bsapi:precipitationProbability6h ?precipitationProbability6h .
+	    ?results sdmw:relativeHumidity ?relativeHumidity .
+	    ?results sdmw:directIrradiation ?directIrradiation .
+	    ?results bsapi:sunshine ?sunshine .
+	    ?results sdmw:visibility ?visibility .
+	    ?results sdmw:windDirection ?windDirection .
+	    ?results sdmw:windSpeed ?windSpeed .
+	    ?results bsapi:gustDirection ?gustDirection .
+	    ?results sdmw:gustSpeed ?gustSpeed .	    
+	}	
+  {		
+		SELECT (CONCAT(MD5(STR(?resultTime)),"-temperature") AS ?id) (?temperature as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("http://vocab.nerc.ac.uk/standard_name/air_temperature/" as ?var)        
+		}
+  }
+  UNION
+  {
+		SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitation") AS ?id) (?precipitation as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/precipitation_amount/" as ?var)       
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-atmosphericPressure") AS ?id) (?atmosphericPressure as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/air_pressure/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-cloudCoverage") AS ?id) (?cloudCoverage as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/cloud_area_fraction/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-weatherType") AS ?id) (?weatherType as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://w3id.org/ad4gd/berlin/weather/property/weatherType/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-dewPoint") AS ?id) (?dewPoint as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/dew_point_temperature/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitationProbability") AS ?id) (?precipitationProbability as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://w3id.org/ad4gd/berlin/weather/property/precipitationProbability/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-precipitationProbability6h") AS ?id) (?precipitationProbability6h as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://w3id.org/ad4gd/berlin/weather/property/precipitationProbability6h/" as ?var)      
+		}
+  }  
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-relativeHumidity") AS ?id) (?relativeHumidity as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/relative_humidity/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-directIrradiation") AS ?id) (?directIrradiation as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/solar_irradiance/" as ?var)      
+		}
+  }  
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-sunshine") AS ?id) (?sunshine as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/duration_of_sunshine/" as ?var)      
+		}
+  }
+  UNION
+  {
+    	SELECT (CONCAT(MD5(STR(?resultTime)),"-visibility") AS ?id) (?visibility as ?simpleResult) (?var as ?observedProperty)
+		WHERE {
+  			BIND("https://vocab.nerc.ac.uk/standard_name/visibility_in_air/" as ?var)      
+		}
+  }
+}

@@ -1,6 +1,6 @@
 #+ summary: "Retrieves all the information about ILIAD Observations"
 #+ endpoint: "http://metaphactory.foodie-cloud.org/sparql?repository=ephedra"
-#+ method: POST
+#+ method: GET
 #+ limit: 100
 #+ offset: 0
 #+ defaults:

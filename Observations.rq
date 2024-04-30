@@ -3,7 +3,7 @@
 #+ endpoint: "http://metaphactory.foodie-cloud.org/sparql?repository=ephedra"
 #+ tags:
 #+   - json
-#+ method: GET
+#+ method: POST
 #+ limit: 100
 #+ offset: 0
 #+ endpoint_in_url: False

@@ -85,4 +85,12 @@ WHERE {
   { BIND(CONCAT(MD5(STR(?resultTime)),"-sunshine") AS ?id) . BIND(?sunshine as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/duration_of_sunshine/" as ?observedProperty) }		
   UNION
   { BIND(CONCAT(MD5(STR(?resultTime)),"-visibility") AS ?id) . BIND(?visibility as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/visibility_in_air/" as ?observedProperty) }	
+  UNION
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-windDirection") AS ?id) . BIND(?windDirection as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/wind_to_direction/" as ?observedProperty) }	
+  UNION
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-windSpeed") AS ?id) . BIND(?windSpeed as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/wind_speed_shear/" as ?observedProperty) }	
+  UNION
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-gustDirection") AS ?id) . BIND(?gustDirection as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/wind_gust_from_direction/" as ?observedProperty) }	
+  UNION
+  { BIND(CONCAT(MD5(STR(?resultTime)),"-gustSpeed") AS ?id) . BIND(?gustSpeed as ?simpleResult) . BIND("https://vocab.nerc.ac.uk/standard_name/wind_speed_of_gust/" as ?observedProperty) }	
 }

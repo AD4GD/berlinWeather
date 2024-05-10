@@ -1,5 +1,5 @@
 #+ summary: "Retrieves all the information about brightskyWeatherData Observations"
-#+ endpoint: "http://metaphactory.foodie-cloud.org/sparql?repository=ephedra"
+#+ endpoint: "http://metaphactory.foodie-cloud.org/sparql"
 #+ method: GET
 #+ limit: 100
 #+ offset: 0
